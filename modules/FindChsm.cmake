@@ -6,7 +6,7 @@ set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 ### Library options ############################################################################
 
 set(CHSM_SIGNAL_CLASSES_H ${SIGNAL_CLASSES_H} CACHE INTERNAL "Set CHSM_SIGNAL_CLASSES_H with local path.") # Template for library spacific options.
- # set(CHSM_SIGNAL_CLASSES_H "C:/Users/livanyi/Desktop/WORK/GIT/mcu_el-26-72-00/app/fan-controller/fan-controller/inc/signal_classes.h")   
+
 ###  
 
 FetchContent_Declare(
