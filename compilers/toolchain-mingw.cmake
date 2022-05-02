@@ -12,6 +12,7 @@ elseif(UNIX OR APPLE)
 endif()
 
 set(toolchain_name "gcc")
+set(toolchain_nickname "mingw_toolchain")
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
 if(autodetect_toolchain)
@@ -73,16 +74,9 @@ set(SIZE                ${CUSTOM_SIZE})
 set(LD                  ${CUSTOM_LD})
 
 add_definitions(
-  -DOD_EXTENSION
-  -DFPGA_PWM
-  -D_RADIUS_INTERFACE_ACTIVE
-  -DNODEBUG
-  -DBOARD_EL_24_02_03
-  -D_FLASH
-  -DFPGA_TEST)
+)
 
 add_compile_options(
-    -std=c11
 )
 
 include_directories("${TOOLCHAIN_DIR}/../include")

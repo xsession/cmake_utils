@@ -14,10 +14,10 @@ find_package(   chsm
                 1.0.0 
                 REQUIRED
 )
-find_package(   drivers 
-                1.0.0 
-                REQUIRED
-)
+# find_package(   drivers 
+#                 1.0.0 
+#                 REQUIRED
+# )
 # find_package(   logical_modules 
 #                 1.0.0 
 #                 REQUIRED
