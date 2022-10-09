@@ -26,12 +26,11 @@ function(clang_format target_name)
   scan_source_dirs(${target_name} res_files)
     find_program(CLANG_FORMAT "clang-format")
     if(CLANG_FORMAT)
-      color_print(blue "Format clang-format the ${target_name} .c/.h source files.")
-      # message(STATUS "res_files: ------> ${res_files}")
-      execute_process(
-        COMMAND clang-format -i -style=file ${res_files}
-        # COMMAND clang-format --verbose -style=file ${res_files}
-      )
+    color_print(blue "Format clang-format the ${target_name} .c/.h source files.")
+        execute_process(
+          # COMMAND clang-format -i -style=file ${res_files}
+          COMMAND clang-format -style=file ${res_files}
+        )
     else()
         color_print(red  "Can't find clang-format command.")
     endif()
