@@ -87,8 +87,6 @@ def create_graph(folder, create_cluster, label_cluster, strict):
 
 if __name__ == '__main__':
 
-    # data = {"retek": [{"szin": "piros", "menny": 2}]}
-    
     data = normalize('reactive_frameworks\c_rf')
     # print(data)
     
