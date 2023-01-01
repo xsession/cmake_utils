@@ -10,17 +10,17 @@ set(UNITY_EXTENSION_MEMORY ON CACHE INTERNAL "Set UNITY_EXTENSION_MEMORY CACHE I
     
 ###  
 
-FetchContent_Declare(
-  Unity
-  GIT_REPOSITORY  https://github.com/ThrowTheSwitch/Unity.git
-  GIT_TAG         origin/master
-  SOURCE_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/unity
-  )
-    
-FetchContent_GetProperties( Unity )     
-FetchContent_MakeAvailable( Unity )
-
 if(NOT Unity_POPULATED)
+
+  FetchContent_Declare(
+    Unity
+    GIT_REPOSITORY  https://github.com/ThrowTheSwitch/Unity.git
+    GIT_TAG         origin/master
+    SOURCE_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/unity
+    )
+      
+  FetchContent_GetProperties( Unity )     
+  FetchContent_MakeAvailable( Unity )
   FetchContent_Populate(Unity)
   add_subdirectory(${Unity_SOURCE_DIR} ${Unity_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif() 
