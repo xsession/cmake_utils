@@ -146,6 +146,11 @@ function(add_module_interface_lib)
 
     target_link_directories(${lib_NAME} INTERFACE ${lib_LINK_DIR})
 
+    target_include_directories(${lib_NAME} INTERFACE
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_INCLUDE}>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_NAME}>
+    )
+    
     if(EXISTS ${lib_STANDARD})
         set_target_properties(${lib_NAME}
             PROPERTIES 
@@ -160,10 +165,7 @@ function(add_module_interface_lib)
     )
     endif()
 
-    target_include_directories(${lib_NAME} INTERFACE
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_INCLUDE}>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_NAME}>
-    )
+
 
     if(CHSM_BUILD_TESTS)
     enable_testing()
