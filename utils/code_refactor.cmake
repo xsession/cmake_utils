@@ -12,6 +12,16 @@ endfunction()
 
 ##################### CLANG_FORMAT ######################
 
+function(scan_header_dirs target_name resource_files)
+  get_target_property(target_sources ${target_name} SOURCE_DIR )
+  file(
+      GLOB_RECURSE
+      SOURCE_FILES
+      CONFIGURE_DEPENDS
+      "${target_sources}/*.[hH]")
+  set(${resource_files} ${SOURCE_FILES} PARENT_SCOPE)
+endfunction()
+
 function(scan_source_dirs target_name resource_files)
   get_target_property(target_sources ${target_name} SOURCE_DIR )
   file(
