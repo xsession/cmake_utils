@@ -78,7 +78,7 @@ set(options)
         "${list_args}"
         )
 
-    add_executable(${exec_NAME} STATIC
+    add_executable(${exec_NAME}
         ${exec_SOURCE}
     )
 
