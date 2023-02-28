@@ -144,6 +144,8 @@ function(add_module_interface_lib)
 
     target_link_libraries(${lib_NAME} INTERFACE ${lib_LINK})
 
+    target_compile_definitions(${lib_NAME} INTERFACE ${lib_DEFINES})
+
     target_link_directories(${lib_NAME} INTERFACE ${lib_LINK_DIR})
 
     target_include_directories(${lib_NAME} INTERFACE
@@ -196,7 +198,7 @@ function(add_module_test)
         ${test_SOURCE}
     )
 
-    target_compile_definitions(${test_NAME} PUBLIC 
+    target_compile_definitions(${test_NAME} PRIVATE 
         ${test_DEFINES}
     )
 
