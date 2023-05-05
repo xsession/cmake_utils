@@ -69,7 +69,7 @@ endfunction()
 function(add_module_executable)
 set(options)
     set(args NAME)
-    set(list_args SOURCE INCLUDE LINK DEFINES STANDARD)
+    set(list_args SOURCE INCLUDE LINK LINK_OPTION SUFFIX DEFINES STANDARD)
     cmake_parse_arguments(
         PARSE_ARGV 0
         exec
@@ -87,7 +87,8 @@ set(options)
     )
 
     target_link_options(${exec_NAME} PRIVATE
-    -Wl,-Map=${PROJECT_BINARY_DIR}/${exec_NAME}.map   
+        ${exex_LINK_OPTION}
+        -Wl,-Map=${PROJECT_BINARY_DIR}/${exec_NAME}.map   
     )
 
     target_link_libraries(${exec_NAME} PUBLIC
@@ -99,6 +100,8 @@ set(options)
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${exec_INCLUDE}>
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${exec_NAME}>
     )
+
+    set_target_properties(${exec_NAME} PROPERTIES SUFFIX ${exec_SUFFIX})
 
     if(EXISTS ${exec_STANDARD})
         set_target_properties(${exec_NAME}
