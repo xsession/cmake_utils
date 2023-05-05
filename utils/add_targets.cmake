@@ -38,19 +38,19 @@ function(add_module_lib)
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_NAME}>
     )
 
-    if(EXISTS ${lib_STANDARD})
-        set_target_properties(${lib_NAME}
-            PROPERTIES 
-            C_STANDARD          ${standard}
-            C_STANDARD_REQUIRED ON
-        )
-    else()
-        set_target_properties(${lib_NAME}
-        PROPERTIES 
-        C_STANDARD          ${standard}
-        C_STANDARD_REQUIRED ON
-    )
-    endif()
+    # if(EXISTS ${lib_STANDARD})
+    #     set_target_properties(${lib_NAME}
+    #         PROPERTIES 
+    #         C_STANDARD          ${standard}
+    #         C_STANDARD_REQUIRED ON
+    #     )
+    # else()
+    #     set_target_properties(${lib_NAME}
+    #         PROPERTIES 
+    #         C_STANDARD          ${standard}
+    #         C_STANDARD_REQUIRED ON
+    # )
+    # endif()
 
     if(CHSM_BUILD_TESTS)
         enable_testing()
@@ -103,19 +103,19 @@ set(options)
 
     set_target_properties(${exec_NAME} PROPERTIES SUFFIX ${exec_SUFFIX})
 
-    if(EXISTS ${exec_STANDARD})
-        set_target_properties(${exec_NAME}
-            PROPERTIES 
-            C_STANDARD          ${standard}
-            C_STANDARD_REQUIRED ON
-        )
-    else()
-        set_target_properties(${exec_NAME}
-        PROPERTIES 
-        C_STANDARD          ${standard}
-        C_STANDARD_REQUIRED ON
-    )
-    endif()
+    # if(EXISTS ${exec_STANDARD})
+    #     set_target_properties(${exec_NAME}
+    #         PROPERTIES 
+    #         C_STANDARD          ${standard}
+    #         C_STANDARD_REQUIRED ON
+    #     )
+    # else()
+    #     set_target_properties(${exec_NAME}
+    #     PROPERTIES 
+    #     C_STANDARD          ${standard}
+    #     C_STANDARD_REQUIRED ON
+    # )
+    # endif()
 
     if(CHSM_BUILD_TESTS)
         enable_testing()
