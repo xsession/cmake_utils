@@ -49,7 +49,7 @@ function(add_module_lib)
     #         PROPERTIES 
     #         C_STANDARD          ${standard}
     #         C_STANDARD_REQUIRED ON
-    # )
+    #     )
     # endif()
 
     if(CHSM_BUILD_TESTS)
@@ -114,7 +114,7 @@ set(options)
     #     PROPERTIES 
     #     C_STANDARD          ${standard}
     #     C_STANDARD_REQUIRED ON
-    # )
+    #     )
     # endif()
 
     if(CHSM_BUILD_TESTS)
@@ -126,7 +126,7 @@ set(options)
         endif()
     endif()
 
-	diagnostic(${lib_NAME})
+	diagnostic(${exec_NAME})
 
 endfunction()
 
@@ -137,50 +137,51 @@ function(add_module_interface_lib)
     set(list_args PACKAGE INCLUDE LINK LINK_DIR DEFINES STANDARD)
     cmake_parse_arguments(
         PARSE_ARGV 0
-        lib
+        lib_if
         "${options}"
         "${args}" 
         "${list_args}"
         ) 
 
-    add_library(${lib_NAME} INTERFACE)
+    message(STATUS "")
 
-    target_link_libraries(${lib_NAME} INTERFACE ${lib_LINK})
+    add_library(${lib_if_NAME} INTERFACE)
 
-    target_compile_definitions(${lib_NAME} INTERFACE ${lib_DEFINES})
+    target_link_libraries(${lib_if_NAME} INTERFACE ${lib_if_LINK})
 
-    target_link_directories(${lib_NAME} INTERFACE ${lib_LINK_DIR})
+    target_compile_definitions(${lib_if_NAME} INTERFACE ${lib_if_DEFINES})
 
-    target_include_directories(${lib_NAME} INTERFACE
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_INCLUDE}>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_NAME}>
+    target_link_directories(${lib_if_NAME} INTERFACE ${lib_if_LINK_DIR})
+
+    target_include_directories(${lib_if_NAME} INTERFACE
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_if_INCLUDE}>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_if_NAME}>
     )
     
-    if(EXISTS ${lib_STANDARD})
-        set_target_properties(${lib_NAME}
-            PROPERTIES 
-            C_STANDARD          ${standard}
-            C_STANDARD_REQUIRED ON
-        )
-    else()
-        set_target_properties(${lib_NAME}
-        PROPERTIES 
-        C_STANDARD          ${standard}
-        C_STANDARD_REQUIRED ON
-    )
-    endif()
-
-
+    # if(EXISTS ${lib_STANDARD})
+    #     set_target_properties(${lib_NAME}
+    #         PROPERTIES 
+    #         C_STANDARD          ${standard}
+    #         C_STANDARD_REQUIRED ON
+    #     )
+    # else()
+    #     set_target_properties(${lib_NAME}
+    #     PROPERTIES 
+    #     C_STANDARD          ${standard}
+    #     C_STANDARD_REQUIRED ON
+    # )
+    # endif()
 
     if(CHSM_BUILD_TESTS)
     enable_testing()
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test)
         add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
     else()
-        message(" !!_!!_!! Test directory doesn't exist in ${exec_NAME} executable!")
+        message(" !!_!!_!! Test directory doesn't exist in ${lib_if_NAME} executable!")
     endif()
     endif()
 
+    message("Target ${lib_NAME} location ${CMAKE_CURRENT_SOURCE_DIR}")
     diagnostic(${lib_NAME})
 endfunction()
 
@@ -197,6 +198,8 @@ function(add_module_test)
         "${list_args}"
         )
 
+    project(${test_NAME})
+
     add_executable(${test_NAME} 
         ${test_SOURCE}
     )
@@ -205,8 +208,8 @@ function(add_module_test)
         ${test_DEFINES}
     )
 
-    target_link_options(${test_NAME} PUBLIC
-    -Wl,-Map=${PROJECT_BINARY_DIR}/bin/${test_NAME}.map   
+    target_link_options(${test_NAME} PRIVATE
+    -Wl,-Map=${test_NAME}.map   
     )
 
     target_link_libraries(${test_NAME} PUBLIC
@@ -219,22 +222,25 @@ function(add_module_test)
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${test_NAME}>
     )
 
-    if(EXISTS ${test_STANDARD})
-        message("test_STANDARD: > ${test_STANDARD}")
-        set_target_properties(${test_NAME}
-        PROPERTIES 
-        C_STANDARD          ${standard}
-        # C_STANDARD          ${test_STANDARD}
-        C_STANDARD_REQUIRED ON
-        )
-    else()
-        set_target_properties(${test_NAME}
-        PROPERTIES 
-        C_STANDARD       ${standard}  
-        C_STANDARD_REQUIRED ON
-        message("not exists test_STANDARD: > ${test_STANDARD}")
-    )
-    endif()
+    # if(EXISTS ${test_STANDARD})
+    #     message("test_STANDARD: > ${test_STANDARD}")
+    #     set_target_properties(${test_NAME}
+    #     PROPERTIES 
+    #     C_STANDARD          ${standard}
+    #     # C_STANDARD          ${test_STANDARD}
+    #     C_STANDARD_REQUIRED ON
+    #     )
+    # else()
+    #     message("not exists test_STANDARD: > ${test_STANDARD}")
+    #     set_target_properties(${test_NAME}
+    #     PROPERTIES 
+    #     C_STANDARD       ${standard}  
+    #     C_STANDARD_REQUIRED ON
+    # )
+    # endif()
+
+    set_property(TARGET ${test_NAME} PROPERTY ECLIPSE_GENERATE_SOURCE_PROJECT ON)
+    set_property(TARGET ${test_NAME} PROPERTY ECLIPSE_GENERATE_LINKED_RESOURCES ON)
 
     add_test(
         NAME ${test_NAME}
