@@ -38,19 +38,13 @@ function(add_module_lib)
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_NAME}>
     )
 
-    # if(EXISTS ${lib_STANDARD})
-    #     set_target_properties(${lib_NAME}
-    #         PROPERTIES 
-    #         C_STANDARD          ${standard}
-    #         C_STANDARD_REQUIRED ON
-    #     )
-    # else()
-    #     set_target_properties(${lib_NAME}
-    #         PROPERTIES 
-    #         C_STANDARD          ${standard}
-    #         C_STANDARD_REQUIRED ON
-    #     )
-    # endif()
+    if(EXISTS lib_STANDARD)
+        set_target_properties(${lib_NAME}
+            PROPERTIES 
+            C_STANDARD          ${standard}
+            C_STANDARD_REQUIRED ON
+        )
+    endif()
 
     if(CHSM_BUILD_TESTS)
         enable_testing()
@@ -82,40 +76,44 @@ set(options)
         ${exec_SOURCE}
     )
 
-    target_compile_definitions(${exec_NAME} PRIVATE 
+    # if(EXISTS exec_DEFINES AND EXISTS ${exec_DEFINES})
+        target_compile_definitions(${exec_NAME} PRIVATE 
         ${exec_DEFINES}
-    )
-
-    target_link_options(${exec_NAME} PRIVATE
+        )
+    # endif()
+    
+    # if(EXISTS exex_LINK_OPTION AND EXISTS ${exex_LINK_OPTION})
+        target_link_options(${exec_NAME} PRIVATE
         ${exex_LINK_OPTION}
         -Wl,-Map=${PROJECT_BINARY_DIR}/${exec_NAME}.map   
-    )
-
-    target_link_libraries(${exec_NAME} PUBLIC
-        ${exec_LINK}
-    )
-
-    target_include_directories(${exec_NAME}
-        PUBLIC
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${exec_INCLUDE}>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${exec_NAME}>
-    )
-
-    set_target_properties(${exec_NAME} PROPERTIES SUFFIX ${exec_SUFFIX})
-
-    # if(EXISTS ${exec_STANDARD})
-    #     set_target_properties(${exec_NAME}
-    #         PROPERTIES 
-    #         C_STANDARD          ${standard}
-    #         C_STANDARD_REQUIRED ON
-    #     )
-    # else()
-    #     set_target_properties(${exec_NAME}
-    #     PROPERTIES 
-    #     C_STANDARD          ${standard}
-    #     C_STANDARD_REQUIRED ON
-    #     )
+        )
     # endif()
+    
+    # if(EXISTS exec_LINK)
+        target_link_libraries(${exec_NAME} PUBLIC
+        ${exec_LINK}
+        )
+    # endif()
+
+    # if(EXISTS exec_INCLUDE AND EXISTS ${exec_INCLUDE})
+        target_include_directories(${exec_NAME}
+            PUBLIC
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${exec_INCLUDE}>
+                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${exec_NAME}>
+        )
+    # endif()
+
+    # if(EXISTS exec_SUFFIX AND EXISTS ${exec_SUFFIX})
+        # set_target_properties(${exec_NAME} PROPERTIES SUFFIX ${exec_SUFFIX})
+    # endif()
+
+    if(EXISTS exec_STANDARD AND EXISTS ${exec_STANDARD})
+        set_target_properties(${exec_NAME}
+            PROPERTIES 
+            C_STANDARD          ${exec_STANDARD}
+            C_STANDARD_REQUIRED ON
+        )
+    endif()
 
     if(CHSM_BUILD_TESTS)
         enable_testing()
