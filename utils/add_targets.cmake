@@ -156,19 +156,13 @@ function(add_module_interface_lib)
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_if_NAME}>
     )
     
-    # if(EXISTS ${lib_STANDARD})
-    #     set_target_properties(${lib_NAME}
-    #         PROPERTIES 
-    #         C_STANDARD          ${standard}
-    #         C_STANDARD_REQUIRED ON
-    #     )
-    # else()
-    #     set_target_properties(${lib_NAME}
-    #     PROPERTIES 
-    #     C_STANDARD          ${standard}
-    #     C_STANDARD_REQUIRED ON
-    # )
-    # endif()
+    if(EXISTS ${lib_if_STANDARD})
+        set_target_properties(${lib_if_NAME}
+            PROPERTIES 
+            C_STANDARD          ${lib_if_STANDARD}
+            C_STANDARD_REQUIRED ON
+        )
+    endif()
 
     if(CHSM_BUILD_TESTS)
     enable_testing()
@@ -180,7 +174,7 @@ function(add_module_interface_lib)
     endif()
 
     message("Target ${lib_NAME} location ${CMAKE_CURRENT_SOURCE_DIR}")
-    diagnostic(${lib_NAME})
+    diagnostic(${lib_if_NAME})
 endfunction()
 
 ########################  Test target  ############################ 
