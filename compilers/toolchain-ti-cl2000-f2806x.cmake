@@ -23,37 +23,17 @@ endif()
 set(toolchain_name "cl2000")
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-if(autodetect_toolchain)
-  find_program(toolchain ${toolchain_name})
-  if(toolchain)
-    execute_process(
-      COMMAND ${UTIL_SEARCH_CMD} ${toolchain_name}
-      OUTPUT_VARIABLE BINUTILS_PATH
-      OUTPUT_STRIP_TRAILING_WHITESPACE)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --blue --bold "Find tolchain as ${BINUTILS_PATH}")
-    get_filename_component(TOOLCHAIN_DIR ${BINUTILS_PATH} DIRECTORY)
-    message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
-    get_filename_component(PARENT_TOOLCHAIN_DIR ${TOOLCHAIN_DIR} DIRECTORY)
-    message(STATUS "PARENT_TOOLCHAIN_DIR: -> ${PARENT_TOOLCHAIN_DIR}")
-  else()
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --red --bold "    Didn't find toolchain!
-    It's possible you forget to add it to the system PATH variable.")
-    message(FATAL_ERROR "")
-  endif()
+set(TOOLCHAIN_DIR "$ENV{C28_TOOLCHAIN_PATH}")
+find_program(toolchain NAMES ${toolchain_name} PATHS ${TOOLCHAIN_DIR} NO_DEFAULT_PATH)
+if(toolchain)
+  execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --blue --bold "Find tolchain as ${TOOLCHAIN_DIR}")
+  message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
+  get_filename_component(PARENT_TOOLCHAIN_DIR ${TOOLCHAIN_DIR} DIRECTORY)
+  message(STATUS "PARENT_TOOLCHAIN_DIR: -> ${PARENT_TOOLCHAIN_DIR}")
 else()
-  # set(TOOLCHAIN_DIR "C:/ti/ccs1010/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/bin")
-  set(TOOLCHAIN_DIR "C:/ti/ccs1010/ccs/tools/compiler/ti-cgt-c2000_20.2.5.LTS/bin")
-  find_program(toolchain NAMES ${toolchain_name} PATHS ${TOOLCHAIN_DIR} NO_DEFAULT_PATH)
-  if(toolchain)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --blue --bold "Find tolchain as ${TOOLCHAIN_DIR}")
-    message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
-    get_filename_component(PARENT_TOOLCHAIN_DIR ${TOOLCHAIN_DIR} DIRECTORY)
-    message(STATUS "PARENT_TOOLCHAIN_DIR: -> ${PARENT_TOOLCHAIN_DIR}")
-  else()
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --red --bold "    Didn't find toolchain!
-    It's possible you forget to add it to the system PATH variable.")
-    message(FATAL_ERROR "")
-  endif()
+  execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --red --bold "    Didn't find toolchain!
+  It's possible you forget to add it to the system PATH variable.")
+  message(FATAL_ERROR "")
 endif()
 
 set(CMAKE_FIND_ROOT_PATH "${TOOLCHAIN_DIR}") # path/bin
