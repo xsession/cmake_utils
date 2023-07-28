@@ -9,7 +9,7 @@ set(standard 11)
 function(add_module_lib)
     set(options)
     set(args NAME)
-    set(list_args PACKAGE SOURCE INCLUDE LINK DEFINES STANDARD)
+    set(list_args PACKAGE SOURCE INCLUDE LINK DEFINES COMPILE_OPTION STANDARD)
     cmake_parse_arguments(
         PARSE_ARGV 0
         lib
@@ -26,6 +26,10 @@ function(add_module_lib)
 
     target_compile_definitions(${lib_NAME} PRIVATE 
         ${lib_DEFINES}
+    )
+  
+    target_compile_options(${lib_NAME} PRIVATE 
+        ${lib_COMPILE_OPTION}
     )
 
     target_link_libraries(${lib_NAME} PUBLIC
@@ -181,7 +185,7 @@ endfunction()
 function(add_module_test)
     set(options)
     set(args NAME)
-    set(list_args SOURCE INCLUDE LINK DEFINES STANDARD)
+    set(list_args SOURCE INCLUDE LINK DEFINES COMPILE_OPTION STANDARD)
     cmake_parse_arguments(
         PARSE_ARGV 0
         test
@@ -198,6 +202,10 @@ function(add_module_test)
 
     target_compile_definitions(${test_NAME} PRIVATE 
         ${test_DEFINES}
+    )
+
+    target_compile_options(${test_NAME} PRIVATE 
+    ${test_COMPILE_OPTION}
     )
 
     target_link_options(${test_NAME} PRIVATE
@@ -236,7 +244,7 @@ function(add_module_test)
 
     add_test(
         NAME ${test_NAME}
-        COMMAND ${test_NAME})
+        COMMAND ${test_NAME} -v)
 
 
 	diagnostic(${test_NAME})
