@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repo
@@ -32,9 +32,7 @@ jobs:
     - name: Build documentation
       run: |
         cd docs
-        ./make html
-        ls -lah
-        tree
+        make html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
