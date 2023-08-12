@@ -15,7 +15,9 @@ set(toolchain_prefix ${toolchain_name})
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
 # NOT supported the spaces in the toolchain path
+if(EXISTS )
     set(TOOLCHAIN_DIR "C:/v1.60/bin")
+    set(OUTSIDE_PYTHON_PATH ${$ENV{PYTHON_PATH}})
 # --------------------------------------------
 
 message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")

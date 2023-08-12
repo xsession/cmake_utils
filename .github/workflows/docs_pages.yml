@@ -32,7 +32,7 @@ jobs:
     - name: Build documentation
       run: |
         cd docs
-        make html
+        ./make html
         ls -lah
         tree
 
