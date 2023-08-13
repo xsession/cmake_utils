@@ -46,3 +46,4 @@ html_css_files = [
     'decorator.css',
 ]
 html_output_folder = '.'
+html_logo = '_static/connection.png'

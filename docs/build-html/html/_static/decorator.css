@@ -5,7 +5,7 @@
     margin: auto;
 }
 
-/* .document {
-    width: 80%;
-    margin: auto;
-} */
+.logo img {
+    width: 150px; /* adjust as needed */
+    height: auto;
+}
