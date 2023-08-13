@@ -32,7 +32,11 @@ jobs:
     - name: Build documentation
       run: |
         cd docs
-        make html
+        ls -lah
+        tree
+        ./make html
+        ls -lah
+        tree
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
