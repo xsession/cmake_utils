@@ -19,13 +19,6 @@ CMake_utils
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Modules
-
-   modules/index
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
    :caption: Exaples
 
    examples/index
