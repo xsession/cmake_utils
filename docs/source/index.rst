@@ -1,3 +1,5 @@
+.. image:: ./_static/connection.png
+   :width: 100
 
 CMake_utils
 ++++++++++++

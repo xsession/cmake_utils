@@ -1,11 +1,17 @@
 <mxfile host="65bd71144e">
     <diagram id="CxG9PtcLVrbES5TmrdyB" name="Page-1">
-        <mxGraphModel dx="1327" dy="503" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
+        <mxGraphModel dx="761" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="2" value="&lt;font style=&quot;font-size: 24px&quot;&gt;CMake_utils Software Architecture Diagram&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="460" y="70" width="510" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="Diagram1 heading" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+                    <mxGeometry x="340" y="170" width="680" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="220" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

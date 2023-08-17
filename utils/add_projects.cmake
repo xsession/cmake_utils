@@ -129,8 +129,10 @@ function(add_sub_project)
     ----------------------> ${sub_project_NAME} <-----------------------------------
     ")
 
-    add_subdirectory(paper_dispenser)
-
+    foreach(subdir_name IN LISTS sub_project_SUBDIRECTORIES)
+        add_subdirectory(${subdir_name})
+        message("--------> subdir_name: ${subdir_name}")
+    endforeach()
 
 endfunction()
 
