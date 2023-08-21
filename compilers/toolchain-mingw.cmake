@@ -15,36 +15,28 @@ set(toolchain_name "gcc")
 set(toolchain_nickname "mingw_toolchain")
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-if(autodetect_toolchain)
-  find_program(toolchain ${toolchain_name})
-  if(toolchain)
-    execute_process(
-      COMMAND ${UTIL_SEARCH_CMD} ${toolchain_name}
-      OUTPUT_VARIABLE BINUTILS_PATH
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --blue --bold "Find tolchain as ${BINUTILS_PATH}")
-    get_filename_component(TOOLCHAIN_DIR ${BINUTILS_PATH} DIRECTORY)
-    message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
-    get_filename_component(PARENT_TOOLCHAIN_DIR ${TOOLCHAIN_DIR} DIRECTORY)
-    message(STATUS "PARENT_TOOLCHAIN_DIR: -> ${PARENT_TOOLCHAIN_DIR}")
-  else()
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --red --bold "    Didn't find toolchain!
-    It's possible you forget to add it to the system PATH variable.")
-    message(FATAL_ERROR "")
-  endif()
+# Check if MINGW_TOOLCHAIN_PATH is set
+if(NOT DEFINED MINGW_TOOLCHAIN_PATH)
+    message(FATAL_ERROR "MINGW_TOOLCHAIN_PATH is not set!")
+endif()
+
+# Check if M3_TOOLCHAIN_PATH is a valid path
+if(NOT EXISTS ${MINGW_TOOLCHAIN_PATH})
+    message(FATAL_ERROR "MINGW_TOOLCHAIN_PATH does not point to a valid path!")
+endif()
+
+set(TOOLCHAIN_DIR "$ENV{MINGW_TOOLCHAIN_PATH}")
+
+find_program(toolchain NAMES ${toolchain_name} PATHS ${TOOLCHAIN_DIR} NO_DEFAULT_PATH)
+if(toolchain)
+  execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --blue --bold "Find tolchain as ${TOOLCHAIN_DIR}")
+  message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
+  get_filename_component(PARENT_TOOLCHAIN_DIR ${TOOLCHAIN_DIR} DIRECTORY)
+  message(STATUS "PARENT_TOOLCHAIN_DIR: -> ${PARENT_TOOLCHAIN_DIR}")
 else()
-  set(TOOLCHAIN_DIR "C:/MinGW/bin") # Add here the absolute path of the actual compiler
-  find_program(toolchain NAMES ${toolchain_name} PATHS ${TOOLCHAIN_DIR} NO_DEFAULT_PATH)
-  if(toolchain)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --blue --bold "Find tolchain as ${TOOLCHAIN_DIR}")
-    message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
-    get_filename_component(PARENT_TOOLCHAIN_DIR ${TOOLCHAIN_DIR} DIRECTORY)
-    message(STATUS "PARENT_TOOLCHAIN_DIR: -> ${PARENT_TOOLCHAIN_DIR}")
-  else()
-    execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --red --bold "    Didn't find toolchain!
-    It's possible you forget to add it to the system PATH variable.")
-    message(FATAL_ERROR "")
-  endif()
+  execute_process(COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --red --bold "    Didn't find toolchain!
+  It's possible you forget to add it to the system PATH variable.")
+  message(FATAL_ERROR "")
 endif()
 
 set(CMAKE_FIND_ROOT_PATH "${TOOLCHAIN_DIR}")

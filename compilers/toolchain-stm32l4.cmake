@@ -41,8 +41,17 @@ set(toolchain_name "arm-none-eabi")
 set(toolchain_prefix ${toolchain_name})
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-# Adjust the toolchain directory as per your setup
-set(TOOLCHAIN_DIR "/path/to/your/arm/gcc/bin")
+# Check if ARM_NONE_EABI_TOOLCHAIN_PATH is set
+if(NOT DEFINED ARM_NONE_EABI_TOOLCHAIN_PATH)
+    message(FATAL_ERROR "ARM_NONE_EABI_TOOLCHAIN_PATH is not set!")
+endif()
+
+# Check if ARM_NONE_EABI_TOOLCHAIN_PATH is a valid path
+if(NOT EXISTS ${ARM_NONE_EABI_TOOLCHAIN_PATH})
+    message(FATAL_ERROR "ARM_NONE_EABI_TOOLCHAIN_PATH does not point to a valid path!")
+endif()
+
+set(TOOLCHAIN_DIR "$ENV{ARM_NONE_EABI_TOOLCHAIN_PATH}")
 
 message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
 
@@ -75,9 +84,6 @@ add_compile_options(
     -g   # include debugging info
     -Wall
 )
-
-link_directories("/path/to/your/arm/gcc/lib")
-
 
 # include the toolchain resources globaly
 include_directories("${TOOLCHAIN_DIR}/../include")
