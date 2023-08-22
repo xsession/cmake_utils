@@ -60,11 +60,6 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="sectnum">2 </span>Development</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview"><span class="sectnum">2.1 </span>Overview</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hierarchical"><span class="sectnum">2.1.1 </span>Hierarchical</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#functional"><span class="sectnum">2.1.2 </span>Functional</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#gui"><span class="sectnum">2.1.2.1 </span>GUI</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#statemachine"><span class="sectnum">2.1.2.2 </span>Statemachine</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -105,31 +100,79 @@
 <h2><span class="sectnum">2.1 </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <section id="hierarchical">
 <h3><span class="sectnum">2.1.1 </span>Hierarchical<a class="headerlink" href="#hierarchical" title="Permalink to this heading"></a></h3>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>myproject/
-├── conf.py
-├── plantuml.jar
-├── index.rst
-├── _build/
-├── _static/
-├── _templates/
-└── modules/
-    ├── module1.rst
-    └── module2.rst
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>├───.github
+│   └───workflows
+│           docs_pages.yml
+│
+├───cmake_project_generator
+│   │   cmake_project_generator.py
+│   │   dependency_scanner.py
+│   │
+│   └───template
+│           cmake_exec.jinja
+│           cmake_lib.jinja
+│           project.jinja
+│
+├───compilers
+│       toolchain-mingw.cmake
+│       toolchain-stm32l4.cmake
+│       toolchain-ti-armcl.cmake
+│       toolchain-ti-cl2000-c28.cmake
+│       toolchain-ti-cl2000-f2806x.cmake
+│       toolchain-xc16.cmake
+├───docs
+├───IDE_project_generators
+│   ├───CCS_project
+│   │   │   ccs_generator.py
+│   │   │
+│   │   ├───ccs_template
+│   │   │       .ccsproject
+│   │   │       .cproject
+│   │   │       .project
+│   │   │
+│   │   └───jinja_template
+│   │           ccsproject.jinja
+│   │           cproject.jinja
+│   │           project.jinja
+│   │
+│   ├───Eclipse_project
+│   │   │   eclipse_generator.py
+│   │   │
+│   │   ├───eclipse_template
+│   │   │       .cproject
+│   │   │       .project
+│   │   │
+│   │   └───jinja_template
+│   │           cproject.jinja
+│   │           project.jinja
+│   │
+│   └───MPLAB_project
+│       │   mplab_generator.py
+│       │
+│       ├───generator_template.X
+│       │   └───nbproject
+│       │           configurations.xml
+│       │           project.xml
+│       │
+│       └───jinja_template
+│               configurations.jinja
+│               project.jinja
+│
+├───output_generators
+│       run_pickpack.cmake
+│       ti-f2806x-output_generation.cmake
+│       xc16-output_generation.cmake
+│
+└───utils
+      add_projects.cmake
+      add_targets.cmake
+      code_refactor.cmake
+      color_print.cmake
+      diagnostic.cmake
+      graphviz.cmake
+      path_list.cmake
 </pre></div>
 </div>
-</section>
-<section id="functional">
-<h3><span class="sectnum">2.1.2 </span>Functional<a class="headerlink" href="#functional" title="Permalink to this heading"></a></h3>
-<section id="gui">
-<h4><span class="sectnum">2.1.2.1 </span>GUI<a class="headerlink" href="#gui" title="Permalink to this heading"></a></h4>
-<p class="plantuml">
-<img src="../_images/plantuml-a1de546ac3aec65bebbbd8af0364becd3444ad73.png" alt="Alice -&gt; Bob: Hi!
-Alice &lt;- Bob: How are you?"/>
-</p>
-</section>
-<section id="statemachine">
-<h4><span class="sectnum">2.1.2.2 </span>Statemachine<a class="headerlink" href="#statemachine" title="Permalink to this heading"></a></h4>
-</section>
 </section>
 </section>
 </section>
