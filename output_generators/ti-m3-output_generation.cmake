@@ -1,7 +1,7 @@
 
 include(color_print)
 
-function(bin2hex_ti_f2806x target)
+function(bin2hex_ti_m3 target)
   find_program(
     BIN2HEX
     NAMES ${TI_OBJDUMP}

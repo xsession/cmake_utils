@@ -18,6 +18,11 @@ function(add_module_lib)
         "${list_args}"
         )
 
+    # if(NOT TARGET crf AND DEFINED CHSM_INCLUDED)
+    # message(STATUS "crf not exists.")
+    # unset(CHSM_INCLUDED CACHE)
+    # endif()
+
     add_library(${lib_NAME} STATIC
         ${lib_SOURCE}
     )

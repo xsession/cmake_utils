@@ -27,15 +27,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(toolchain_name "cl2000")
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-# Check if C28_TOOLCHAIN_PATH is set
-if(NOT DEFINED C28_TOOLCHAIN_PATH)
-    message(FATAL_ERROR "C28_TOOLCHAIN_PATH is not set!")
-endif()
+# # Check if C28_TOOLCHAIN_PATH is set
+# if(NOT DEFINED C28_TOOLCHAIN_PATH)
+#     message(FATAL_ERROR "C28_TOOLCHAIN_PATH is not set!")
+# endif()
 
-# Check if M3_TOOLCHAIN_PATH is a valid path
-if(NOT EXISTS ${C28_TOOLCHAIN_PATH})
-    message(FATAL_ERROR "C28_TOOLCHAIN_PATH does not point to a valid path!")
-endif()
+# # Check if M3_TOOLCHAIN_PATH is a valid path
+# if(NOT EXISTS ${C28_TOOLCHAIN_PATH})
+#     message(FATAL_ERROR "C28_TOOLCHAIN_PATH does not point to a valid path!")
+# endif()
 
 set(TOOLCHAIN_DIR "$ENV{C28_TOOLCHAIN_PATH}")
 

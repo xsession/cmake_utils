@@ -61,10 +61,21 @@
 <p class="caption" role="heading"><span class="caption-text">Exaples</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="sectnum">4 </span>Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#add-module-lib"><span class="sectnum">4.1 </span>add_module_lib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#add-module-executable"><span class="sectnum">4.2 </span>add_module_executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#add-module-interface-lib"><span class="sectnum">4.3 </span>add_module_interface_lib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#add-module-test"><span class="sectnum">4.4 </span>add_module_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utils-add-target-cmake"><span class="sectnum">4.1 </span>utils/add_target.cmake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#add-module-lib"><span class="sectnum">4.1.1 </span>add_module_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-module-executable"><span class="sectnum">4.1.2 </span>add_module_executable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-module-interface-lib"><span class="sectnum">4.1.3 </span>add_module_interface_lib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-module-test"><span class="sectnum">4.1.4 </span>add_module_test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output-generators-ti-f2806x-output-generation-cmake"><span class="sectnum">4.2 </span>output_generators/ti-f2806x-output_generation.cmake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bin2hex"><span class="sectnum">4.2.1 </span>bin2hex</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output-generators-xc16-output-generation-cmake"><span class="sectnum">4.3 </span>output_generators/xc16-output_generation.cmake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1"><span class="sectnum">4.3.1 </span>bin2hex</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -95,8 +106,10 @@
              
   <section id="examples">
 <h1><span class="sectnum">4 </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
+<section id="utils-add-target-cmake">
+<h2><span class="sectnum">4.1 </span>utils/add_target.cmake<a class="headerlink" href="#utils-add-target-cmake" title="Permalink to this heading"></a></h2>
 <section id="add-module-lib">
-<h2><span class="sectnum">4.1 </span>add_module_lib<a class="headerlink" href="#add-module-lib" title="Permalink to this heading"></a></h2>
+<h3><span class="sectnum">4.1.1 </span>add_module_lib<a class="headerlink" href="#add-module-lib" title="Permalink to this heading"></a></h3>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>add_module_lib(
       NAME
                sht30
@@ -119,7 +132,7 @@
 </div>
 </section>
 <section id="add-module-executable">
-<h2><span class="sectnum">4.2 </span>add_module_executable<a class="headerlink" href="#add-module-executable" title="Permalink to this heading"></a></h2>
+<h3><span class="sectnum">4.1.2 </span>add_module_executable<a class="headerlink" href="#add-module-executable" title="Permalink to this heading"></a></h3>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>add_module_executable(
    NAME fan_controller
    SOURCE
@@ -187,7 +200,7 @@
 </div>
 </section>
 <section id="add-module-interface-lib">
-<h2><span class="sectnum">4.3 </span>add_module_interface_lib<a class="headerlink" href="#add-module-interface-lib" title="Permalink to this heading"></a></h2>
+<h3><span class="sectnum">4.1.3 </span>add_module_interface_lib<a class="headerlink" href="#add-module-interface-lib" title="Permalink to this heading"></a></h3>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>add_module_interface_lib(
    NAME
       signal_classes_ext_modules
@@ -206,7 +219,7 @@
 </div>
 </section>
 <section id="add-module-test">
-<h2><span class="sectnum">4.4 </span>add_module_test<a class="headerlink" href="#add-module-test" title="Permalink to this heading"></a></h2>
+<h3><span class="sectnum">4.1.4 </span>add_module_test<a class="headerlink" href="#add-module-test" title="Permalink to this heading"></a></h3>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>add_module_test(
    NAME
       median_filter_test
@@ -225,6 +238,25 @@
 )
 </pre></div>
 </div>
+</section>
+</section>
+<section id="output-generators-ti-f2806x-output-generation-cmake">
+<h2><span class="sectnum">4.2 </span>output_generators/ti-f2806x-output_generation.cmake<a class="headerlink" href="#output-generators-ti-f2806x-output-generation-cmake" title="Permalink to this heading"></a></h2>
+<section id="bin2hex">
+<h3><span class="sectnum">4.2.1 </span>bin2hex<a class="headerlink" href="#bin2hex" title="Permalink to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>bin2hex(target_name)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="output-generators-xc16-output-generation-cmake">
+<h2><span class="sectnum">4.3 </span>output_generators/xc16-output_generation.cmake<a class="headerlink" href="#output-generators-xc16-output-generation-cmake" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3><span class="sectnum">4.3.1 </span>bin2hex<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>bin2hex(target_name)
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

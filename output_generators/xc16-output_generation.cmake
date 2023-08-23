@@ -1,7 +1,7 @@
 
 include(color_print)
 
-function(bin2hex target)
+function(bin2hex_xc16 target)
   find_program(
     BIN2HEX
     NAMES ${toolchain_prefix}-bin2hex bin2hex
