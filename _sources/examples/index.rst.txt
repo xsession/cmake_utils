@@ -4,8 +4,11 @@
 Examples
 +++++++++
 
+utils/add_target.cmake
+=======================
+
 add_module_lib
-===============
+---------------
 
 .. code-block:: text
 
@@ -29,7 +32,7 @@ add_module_lib
    )
 
 add_module_executable
-======================
+----------------------
 
 .. code-block:: text
 
@@ -98,7 +101,7 @@ add_module_executable
    )
 
 add_module_interface_lib
-=========================
+-------------------------
 
 .. code-block:: text
 
@@ -118,7 +121,7 @@ add_module_interface_lib
          )
 
 add_module_test
-================
+----------------
 
 .. code-block:: text
 
@@ -140,4 +143,22 @@ add_module_test
    ) 
 
 
+output_generators/ti-f2806x-output_generation.cmake
+====================================================
 
+bin2hex
+--------
+
+.. code-block:: text
+
+   bin2hex(target_name)
+
+output_generators/xc16-output_generation.cmake
+====================================================
+
+bin2hex
+--------
+
+.. code-block:: text
+
+   bin2hex(target_name)
