@@ -18,7 +18,7 @@ function(bin2hex_ti_m3 target)
     COMMENT "Generating ${target} executable!"
     DEPENDS ${PROJECT_BINARY_DIR}/bin/${target}
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/bin
-    COMMAND "${BIN2HEX}" --diag_wrap=off --boot --gpio8 --ascii -o "${target}.a00" "${target}")
+    COMMAND "${BIN2HEX}" --boot --gpio8 --ascii -o "${target}.a00" "${target}")
 
     set_property(
         DIRECTORY
