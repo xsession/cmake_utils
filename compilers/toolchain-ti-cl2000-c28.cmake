@@ -82,7 +82,7 @@ add_definitions(
     -DNO_PROFILING
     -DFPGA_PWM
     -DFPGA_TEST
-    -DBOARD_EL_26_72_00)
+    -DBOARD_EL_24_02_03)
 
 add_compile_options(
     -v28
@@ -91,7 +91,7 @@ add_compile_options(
     --float_support=fpu32
     --vcu_support=vcu0
     -O2
-    --c11
+    --c99
     --diag_warning=225
     --diag_wrap=off
     --display_error_number

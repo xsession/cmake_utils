@@ -76,7 +76,7 @@ add_compile_options(
     --code_state=16
     -me
     -O2
-    --c99
+    --c11
     --gcc
     --diag_warning=225
     --diag_wrap=off
