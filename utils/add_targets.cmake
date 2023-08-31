@@ -18,21 +18,21 @@ function(add_module_lib)
         "${list_args}"
         )
 
-    # set(supported_toolchain FALSE)
+    set(supported_toolchain FALSE)
 
-    # if(EXISTS lib_TOOLCHAIN_OPTION)
-    #     foreach(toolchain_opt IN LISTS lib_TOOLCHAIN_OPTION)
-    #         if(${toolchain_opt} STREQUAL toolchain_name)
-    #             message("toolchain_opt: ------------> ${toolchain_opt}")
-    #             set(supported_toolchain TRUE)
-    #         endif()
-    #     endforeach()
-    # else()    
-    #     set(supported_toolchain TRUE)
-    # endif()
-    
-        
-    # if(supported_toolchain EQUAL TRUE)
+    if(lib_TOOLCHAIN_OPTION)
+        foreach(toolchain_opt IN LISTS lib_TOOLCHAIN_OPTION)
+            if(${toolchain_opt} STREQUAL ${toolchain_name})
+                set(supported_toolchain TRUE)
+            else()
+                message("Target ${lib_NAME} not support this compiler: ------------> ${toolchain_opt}")
+            endif()
+        endforeach()
+    else()
+        set(supported_toolchain TRUE)
+    endif()
+
+    if(${supported_toolchain})
 
         add_library(${lib_NAME} STATIC
             ${lib_SOURCE}
@@ -77,7 +77,7 @@ function(add_module_lib)
 
         diagnostic(${lib_NAME})
 
-    # endif()
+    endif()
 endfunction()
 
 ########################  Executible target  ############################ 
@@ -93,21 +93,21 @@ set(options)
         "${list_args}"
         )
 
-    # set(supported_toolchain FALSE)
+    set(supported_toolchain FALSE)
 
-    # if(EXISTS exec_TOOLCHAIN_OPTION)
-    #     foreach(toolchain_opt IN LISTS exec_TOOLCHAIN_OPTION)
-    #         if(${toolchain_opt} STREQUAL toolchain_name)
-    #             message("toolchain_opt: ------------> ${toolchain_opt}")
-    #             set(supported_toolchain TRUE)
-    #         endif()
-    #     endforeach()
-    # else()    
-    #     set(supported_toolchain TRUE)
-    # endif()
-    
-        
-    # if(supported_toolchain EQUAL TRUE)
+    if(exec_TOOLCHAIN_OPTION)
+        foreach(toolchain_opt IN LISTS exec_TOOLCHAIN_OPTION)
+            if(${toolchain_opt} STREQUAL ${toolchain_name})
+                set(supported_toolchain TRUE)
+            else()
+                message("Target ${exec_NAME} not support this compiler: ------------> ${toolchain_opt}")
+            endif()
+        endforeach()
+    else()
+        set(supported_toolchain TRUE)
+    endif()
+
+    if(${supported_toolchain})
 
         add_executable(${exec_NAME}
             ${exec_SOURCE}
@@ -155,7 +155,7 @@ set(options)
         endif()
 
         diagnostic(${exec_NAME})
-    # endif()
+    endif()
 endfunction()
 
 ########################  Interface lib target ############################ 
@@ -171,20 +171,21 @@ function(add_module_interface_lib)
         "${list_args}"
         ) 
 
-    # set(supported_toolchain FALSE)
+    set(supported_toolchain FALSE)
 
-    # if(EXISTS lib_if_TOOLCHAIN_OPTION)
-    #     foreach(toolchain_opt IN LISTS lib_if_TOOLCHAIN_OPTION)
-    #         if(${toolchain_opt} STREQUAL toolchain_name)
-    #             message("toolchain_opt: ------------> ${toolchain_opt}")
-    #             set(supported_toolchain TRUE)
-    #         endif()
-    #     endforeach()
-    # else()    
-    #     set(supported_toolchain TRUE)
-    # endif()
-    
-    # if(supported_toolchain EQUAL TRUE)
+    if(lib_if_TOOLCHAIN_OPTION)
+        foreach(toolchain_opt IN LISTS lib_if_TOOLCHAIN_OPTION)
+            if(${toolchain_opt} STREQUAL ${toolchain_name})
+                set(supported_toolchain TRUE)
+            else()
+                message("Target ${lib_if_NAME} not support this compiler: ------------> ${toolchain_opt}")
+            endif()
+        endforeach()
+    else()
+        set(supported_toolchain TRUE)
+    endif()
+
+    if(${supported_toolchain})
 
         add_library(${lib_if_NAME} INTERFACE)
 
@@ -221,7 +222,7 @@ function(add_module_interface_lib)
         message("Target ${lib_NAME} location ${CMAKE_CURRENT_SOURCE_DIR}")
         diagnostic(${lib_if_NAME})
 
-    # endif()
+    endif()
 endfunction()
 
 ########################  Test target  ############################ 
