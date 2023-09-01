@@ -133,9 +133,9 @@ set(options)
             )
         endforeach()
 
-        # if(EXISTS exec_SUFFIX AND EXISTS ${exec_SUFFIX})
-            # set_target_properties(${exec_NAME} PROPERTIES SUFFIX ${exec_SUFFIX})
-        # endif()
+        if(exec_SUFFIX)
+            set_target_properties(${exec_NAME} PROPERTIES SUFFIX ${exec_SUFFIX})
+        endif()
 
         if(EXISTS exec_STANDARD AND EXISTS ${exec_STANDARD})
             set_target_properties(${exec_NAME}
