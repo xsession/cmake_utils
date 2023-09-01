@@ -95,8 +95,8 @@ add_compile_options(
     --diag_warning=225
     --diag_wrap=off
     --display_error_number
+    --ramfunc=on
     --abi=coffabi )
 
 include_directories("${TOOLCHAIN_DIR}/../include")
 link_directories("${TOOLCHAIN_DIR}/../lib")
-link_libraries(libc)
