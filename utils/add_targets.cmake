@@ -118,7 +118,7 @@ set(options)
         )
 
         target_link_options(${exec_NAME} PRIVATE
-        ${exex_LINK_OPTION}
+        ${exec_LINK_OPTION}
         # -Wl,-Map=${PROJECT_BINARY_DIR}/${exec_NAME}.map   
         )
 
