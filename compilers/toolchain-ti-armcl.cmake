@@ -86,3 +86,4 @@ add_compile_options(
     --ual )
 
     include_directories("${TOOLCHAIN_DIR}/../include")
+    link_directories("${TOOLCHAIN_DIR}/../lib")

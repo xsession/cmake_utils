@@ -1,19 +1,38 @@
-include(color_print)
 
-function(pickpack   target 
-                    python_path 
-                    pickpack_path 
-                    xml_name)
+function(copy2pickpack  target
+                        target_type
+                        project_name
+                        mcu_core
+                        pickpack_path 
+                        )
 
-  add_custom_command(
-    TARGET ${target}
-    POST_BUILD
-    COMMENT "Generating ${target}.b00"
-    DEPENDS ${PROJECT_BINARY_DIR}/app/${target}/bin/${target}
-    COMMAND "${python_path}/python.exe" "${pickpack_path}/bootAsm.py" "${pickpack_path}/jobs/${xml_name}.xml" )
+  if(${target_type} STREQUAL "app")
 
-    set_property(
+    add_custom_command(
+      TARGET ${target}
+      POST_BUILD
+      COMMENT "Copying ${target}.a00 to PickPack/projects/${project_name}/components/${mcu_core}"
+      DEPENDS ${PROJECT_BINARY_DIR}/app/${project_name}/bin/${target}
+      COMMAND ${CMAKE_COMMAND} -E copy
+                              ${PROJECT_BINARY_DIR}/bin/${target}_${CURRENT_TIMESTAMP}.a00 
+                              ${PICKPACK_PATH}/projects/${project_name}/components/${mcu_core}  )                  
+  else()
+
+    add_custom_command(
+      TARGET ${target}
+      POST_BUILD
+      COMMENT "Copying ${target}.a00 to PickPack/projects/${project_name}/components/bl/${mcu_core}"
+      DEPENDS ${PROJECT_BINARY_DIR}/app/${target}/bin/${target}
+      COMMAND ${CMAKE_COMMAND} -E copy
+                              ${PROJECT_BINARY_DIR}/bin/${target}_${CURRENT_TIMESTAMP}.a00 
+                              ${PICKPACK_PATH}/projects/${project_name}/components/bl/${mcu_core}  )                  
+                              
+  endif()
+  
+  set_property(
         DIRECTORY
         APPEND
-        PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${PROJECT_BINARY_DIR}/app/${target}/bin/${target})
+        PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${PROJECT_BINARY_DIR}/bin/${target}_${CURRENT_TIMESTAMP}.a00 ${PROJECT_BINARY_DIR}/bin/${target} )
+
 endfunction()
+

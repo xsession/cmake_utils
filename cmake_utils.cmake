@@ -21,6 +21,7 @@ if(NOT DEFINED CMAKE_UTILS_INCLUDED)
     include(ti-m3-output_generation)
     include(ti-f2806x-output_generation)
     include(xc16-output_generation)
+    include(run_pickpack)
 
     set(CMAKE_UTILS_INCLUDED TRUE)
 

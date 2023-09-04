@@ -1,7 +1,7 @@
 
 include(color_print)
 
-function(bin2hex_ti_f2806x target)
+function(bin2hex target)
   find_program(
     BIN2HEX
     NAMES ${TI_OBJDUMP}
@@ -18,10 +18,10 @@ function(bin2hex_ti_f2806x target)
     COMMENT "Generating ${target} executable!"
     DEPENDS ${PROJECT_BINARY_DIR}/bin/${target}
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/bin
-    COMMAND "${BIN2HEX}" --diag_wrap=off --boot --gpio8 --ascii -o "${target}.a00" "${target}")
+    COMMAND "${BIN2HEX}" --diag_wrap=off --boot --gpio8 --ascii -o "${target}_${CURRENT_TIMESTAMP}.a00" "${target}")
 
     set_property(
         DIRECTORY
         APPEND
-      PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${PROJECT_BINARY_DIR}/bin/${target}.out ${PROJECT_BINARY_DIR}/bin/${target}.a00)
+      PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${PROJECT_BINARY_DIR}/bin/${target}.out ${PROJECT_BINARY_DIR}/bin/${target}_${CURRENT_TIMESTAMP}.a00)
 endfunction()
