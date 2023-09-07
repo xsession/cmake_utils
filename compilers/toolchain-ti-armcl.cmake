@@ -5,6 +5,10 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION  1)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
+set(CMAKE_CXX_COMPILER_WORKS 1)
+set(CMAKE_C_COMPILER_WORKS 1)
+set(CMAKE_ASM_COMPILER_WORKS 1)
+
 set(CPU_ARCHITECTURE M3)
 # Generate compile_command.json to make it easier to work with clang based tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

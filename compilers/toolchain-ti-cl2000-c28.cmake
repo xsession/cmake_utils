@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.18 )
 
 # set target system
 set(CMAKE_SYSTEM_NAME Generic)
@@ -13,6 +13,10 @@ set(CMAKE_C_USE_RESPONSE_FILE_FOR_INCLUDES 1)
 set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES 1)
 set(CMAKE_C_RESPONSE_FILE_LINK_FLAG "@")
 set(CMAKE_CXX_RESPONSE_FILE_LINK_FLAG "@")
+
+set(CMAKE_CXX_COMPILER_WORKS 1)
+set(CMAKE_C_COMPILER_WORKS 1)
+set(CMAKE_ASM_COMPILER_WORKS 1)
 
 if(MINGW OR CYGWIN OR WIN32)
     set(UTIL_SEARCH_CMD where)
@@ -38,6 +42,7 @@ set(CMAKE_C_COMPILER_ID ${toolchain_name})
 # endif()
 
 set(TOOLCHAIN_DIR "$ENV{C28_TOOLCHAIN_PATH}")
+message(STATUS "TOOLCHAIN_DIR: -> ${TOOLCHAIN_DIR}")
 
 find_program(toolchain NAMES ${toolchain_name} PATHS ${TOOLCHAIN_DIR} NO_DEFAULT_PATH)
 if(toolchain)
