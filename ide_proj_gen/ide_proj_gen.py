@@ -23,7 +23,7 @@ class PythonCodeGenException(Exception):
         logging.error(args[0])
 
 class Mplab_project:
-    def __init__(self) -> None:
+    def __init__(self, includes, sources, linked_libs, defines, proj_location) -> None:
         pass
     
     def project(self):
