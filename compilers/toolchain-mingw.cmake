@@ -15,15 +15,15 @@ set(toolchain_name "gcc")
 set(toolchain_nickname "mingw_toolchain")
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-# Check if MINGW_TOOLCHAIN_PATH is set
-if(NOT DEFINED MINGW_TOOLCHAIN_PATH)
-    message(FATAL_ERROR "MINGW_TOOLCHAIN_PATH is not set!")
-endif()
+# # Check if MINGW_TOOLCHAIN_PATH is set
+# if(NOT DEFINED MINGW_TOOLCHAIN_PATH)
+#     message(FATAL_ERROR "MINGW_TOOLCHAIN_PATH is not set!")
+# endif()
 
-# Check if M3_TOOLCHAIN_PATH is a valid path
-if(NOT EXISTS ${MINGW_TOOLCHAIN_PATH})
-    message(FATAL_ERROR "MINGW_TOOLCHAIN_PATH does not point to a valid path!")
-endif()
+# # Check if M3_TOOLCHAIN_PATH is a valid path
+# if(NOT EXISTS ${MINGW_TOOLCHAIN_PATH})
+#     message(FATAL_ERROR "MINGW_TOOLCHAIN_PATH does not point to a valid path!")
+# endif()
 
 set(TOOLCHAIN_DIR "$ENV{MINGW_TOOLCHAIN_PATH}")
 
