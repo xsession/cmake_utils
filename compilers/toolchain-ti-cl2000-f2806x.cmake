@@ -29,6 +29,7 @@ set(CPU_ARCHITECTURE f2806x)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(toolchain_name "cl2000")
+set(toolchain_nick_name "cl2000")
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
 # # Check if C28_TOOLCHAIN_PATH is set
