@@ -14,15 +14,15 @@ set(toolchain_name "xc16")
 set(toolchain_prefix ${toolchain_name})
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-# Check if XC16_TOOLCHAIN_PATH is set
-if(NOT DEFINED XC16_TOOLCHAIN_PATH)
-    message(FATAL_ERROR "XC16_TOOLCHAIN_PATH is not set!")
-endif()
+# # Check if XC16_TOOLCHAIN_PATH is set
+# if(NOT DEFINED XC16_TOOLCHAIN_PATH)
+#     message(FATAL_ERROR "XC16_TOOLCHAIN_PATH is not set!")
+# endif()
 
-# Check if M3_TOOLCHAIN_PATH is a valid path
-if(NOT EXISTS ${XC16_TOOLCHAIN_PATH})
-    message(FATAL_ERROR "XC16_TOOLCHAIN_PATH does not point to a valid path!")
-endif()
+# # Check if M3_TOOLCHAIN_PATH is a valid path
+# if(NOT EXISTS ${XC16_TOOLCHAIN_PATH})
+#     message(FATAL_ERROR "XC16_TOOLCHAIN_PATH does not point to a valid path!")
+# endif()
 
 set(TOOLCHAIN_DIR "$ENV{XC16_TOOLCHAIN_PATH}")
 
