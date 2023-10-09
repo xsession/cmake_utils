@@ -69,6 +69,8 @@ add_definitions(
 )
 
 add_compile_options(
+    # -ftest-coverage
+    # -fprofile-arcs
 )
 
 include_directories("${TOOLCHAIN_DIR}/../include")

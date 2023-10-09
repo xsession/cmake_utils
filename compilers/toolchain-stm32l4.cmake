@@ -41,15 +41,15 @@ set(toolchain_name "arm-none-eabi")
 set(toolchain_prefix ${toolchain_name})
 set(CMAKE_C_COMPILER_ID ${toolchain_name})
 
-# Check if ARM_NONE_EABI_TOOLCHAIN_PATH is set
-if(NOT DEFINED ARM_NONE_EABI_TOOLCHAIN_PATH)
-    message(FATAL_ERROR "ARM_NONE_EABI_TOOLCHAIN_PATH is not set!")
-endif()
+# # Check if ARM_NONE_EABI_TOOLCHAIN_PATH is set
+# if(NOT DEFINED ARM_NONE_EABI_TOOLCHAIN_PATH)
+#     message(FATAL_ERROR "ARM_NONE_EABI_TOOLCHAIN_PATH is not set!")
+# endif()
 
-# Check if ARM_NONE_EABI_TOOLCHAIN_PATH is a valid path
-if(NOT EXISTS ${ARM_NONE_EABI_TOOLCHAIN_PATH})
-    message(FATAL_ERROR "ARM_NONE_EABI_TOOLCHAIN_PATH does not point to a valid path!")
-endif()
+# # Check if ARM_NONE_EABI_TOOLCHAIN_PATH is a valid path
+# if(NOT EXISTS ${ARM_NONE_EABI_TOOLCHAIN_PATH})
+#     message(FATAL_ERROR "ARM_NONE_EABI_TOOLCHAIN_PATH does not point to a valid path!")
+# endif()
 
 set(TOOLCHAIN_DIR "$ENV{ARM_NONE_EABI_TOOLCHAIN_PATH}")
 

@@ -1,6 +1,6 @@
 
-function(info_collector target output_file)
-
+macro(info_collector target)
+  set(output_file "${PROJECT_BINARY_DIR}/bin/${target}_collected_info.json")
   message(STATUS "Collecting info for ${target}...")
   message(STATUS "Output file: ${output_file}")
   # start json file
@@ -8,14 +8,17 @@ function(info_collector target output_file)
 
   # executable own include dirs
   set(INCLUDE_DIRS_LIST "[")
+  # string(APPEND JSON_CONTENT "\"executable_include_directories\": [")
   get_target_property(dirs ${target} INCLUDE_DIRECTORIES)
-  foreach(dir ${dirs})
-    list(APPEND INCLUDE_DIRS_LIST "\"${dir}\",")
+  string(REPLACE ";" " " dirs_ ${dirs})
+  foreach(dir ${dirs_})
+    list(APPEND INCLUDE_DIRS_LIST "${dir},")
   endforeach()
   # Remove trailing comma
-  list(REMOVE_AT INCLUDE_DIRS_LIST -1)
+  # list(REMOVE_AT INCLUDE_DIRS_LIST -1)
   list(APPEND INCLUDE_DIRS_LIST "]")
   string(JOIN "\n" INCLUDE_DIRS_STRING ${INCLUDE_DIRS_LIST})
+  message(STATUS "Include dirs: ${INCLUDE_DIRS_STRING}")
   string(APPEND JSON_CONTENT "\"include_directories\": ${INCLUDE_DIRS_STRING},\n")
 
   # linked libs
@@ -56,9 +59,9 @@ function(info_collector target output_file)
   string(APPEND JSON_CONTENT "}\n")
   file(WRITE ${output_file} "${JSON_CONTENT}")
 
-endfunction()
+endmacro()
 
-info_collector(${TARGET_NAME} ${OUTPUT_FILE})
+# info_collector(${TARGET_NAME} ${OUTPUT_FILE})
 
 # function(kecske)
 #   message(STATUS "Hello")
