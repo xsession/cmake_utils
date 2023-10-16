@@ -1,70 +1,46 @@
+macro(info_collector target_name)
 
-macro(info_collector target)
-  set(output_file "${PROJECT_BINARY_DIR}/bin/${target}_collected_info.json")
-  message(STATUS "Collecting info for ${target}...")
-  message(STATUS "Output file: ${output_file}")
-  # start json file
-  set(JSON_CONTENT "{\n")
+  # Extract properties
+  get_target_property(RAW_MY_INCLUDES ${target_name} INCLUDE_DIRECTORIES)
+  string(REGEX REPLACE ".*$<BUILD_INTERFACE:([^>]*)>.*" "\\1" MY_INCLUDES ${RAW_MY_INCLUDES})
+  message(STATUS "MY_INCLUDES: ${MY_INCLUDES}")
+  get_target_property(MY_DEFINITIONS ${target_name} COMPILE_DEFINITIONS)
+  message(STATUS "MY_DEFINITIONS: ${MY_DEFINITIONS}")
+  get_target_property(MY_LINK_LIBRARIES ${target_name} LINK_LIBRARIES)
+  message(STATUS "MY_LINK_LIBRARIES: ${MY_LINK_LIBRARIES}")
 
-  # executable own include dirs
-  set(INCLUDE_DIRS_LIST "[")
-  # string(APPEND JSON_CONTENT "\"executable_include_directories\": [")
-  get_target_property(dirs ${target} INCLUDE_DIRECTORIES)
-  string(REPLACE ";" " " dirs_ ${dirs})
-  foreach(dir ${dirs_})
-    list(APPEND INCLUDE_DIRS_LIST "${dir},")
-  endforeach()
-  # Remove trailing comma
-  # list(REMOVE_AT INCLUDE_DIRS_LIST -1)
-  list(APPEND INCLUDE_DIRS_LIST "]")
-  string(JOIN "\n" INCLUDE_DIRS_STRING ${INCLUDE_DIRS_LIST})
-  message(STATUS "Include dirs: ${INCLUDE_DIRS_STRING}")
-  string(APPEND JSON_CONTENT "\"include_directories\": ${INCLUDE_DIRS_STRING},\n")
+  # Remove duplicates from the include directories
+  list(REMOVE_DUPLICATES MY_INCLUDES)
 
-  # linked libs
-  get_target_property(MY_TARGET_LIBS ${target} LINK_LIBRARIES)
-  set(LINKED_LIBS_LIST "[")
-  foreach(lib ${MY_TARGET_LIBS})
-    list(APPEND LINKED_LIBS_LIST "\"${lib}\",")
-  endforeach()
-  # Remove trailing comma
-  list(REMOVE_AT LINKED_LIBS_LIST -1)
-  list(APPEND LINKED_LIBS_LIST "]")
-  string(JOIN "\n" LINKED_LIBS_STRING ${LINKED_LIBS_LIST})
-  string(APPEND JSON_CONTENT "\"linked_libraries\": ${LINKED_LIBS_STRING},\n")
+  # Function to convert a list to a JSON array
+  function(list_to_json_array input_list output_json)
+      set(local_output "[")
+      set(list_length ${ARGC})
+      math(EXPR list_length "${list_length}-2") # Subtracting 2 to account for the input_list and output_json variables
+      foreach(index RANGE 0 ${list_length})
+          list(GET ${input_list} ${index} current_element)
+          set(local_output "${local_output}\"${current_element}\"")
+          if(NOT index EQUAL ${list_length})
+              set(local_output "${local_output},")
+          endif()
+      endforeach()
+      set(local_output "${local_output}]")
+      set(${output_json} "${local_output}" PARENT_SCOPE)
+  endfunction()
 
-  # libs include directories
-  set(LIB_INCLUDE_DIRS_LIST "{")
-  foreach(lib ${MY_TARGET_LIBS})
-    if(TARGET ${lib})
-      get_target_property(LIB_INCLUDE_DIRS ${lib} INTERFACE_INCLUDE_DIRECTORIES)
-      if(LIB_INCLUDE_DIRS)
-        list(APPEND LIB_INCLUDE_DIRS_LIST "\"${lib}\": [")
-        foreach(include_dir ${LIB_INCLUDE_DIRS})
-          list(APPEND LIB_INCLUDE_DIRS_LIST "\"${include_dir}\",")
-        endforeach()
-        # Remove trailing comma
-        list(REMOVE_AT LIB_INCLUDE_DIRS_LIST -1)
-        list(APPEND LIB_INCLUDE_DIRS_LIST "],")
-      endif()
-    endif()
-  endforeach()
-  # Remove trailing comma
-  list(REMOVE_AT LIB_INCLUDE_DIRS_LIST -1)
-  list(APPEND LIB_INCLUDE_DIRS_LIST "}")
-  string(JOIN "\n" LIB_INCLUDE_DIRS_STRING ${LIB_INCLUDE_DIRS_LIST})
-  string(APPEND JSON_CONTENT "\"libraries_include_directories\": ${LIB_INCLUDE_DIRS_STRING}\n")
+  # Convert properties to JSON format
+  list_to_json_array("${MY_INCLUDES}" JSON_INCLUDES)
+  list_to_json_array("${MY_DEFINITIONS}" JSON_DEFINITIONS)
+  list_to_json_array("${MY_LINK_LIBRARIES}" JSON_LINK_LIBRARIES)
 
-  # close json file
-  string(APPEND JSON_CONTENT "}\n")
-  file(WRITE ${output_file} "${JSON_CONTENT}")
+  set(JSON_OUTPUT "{\n")
+  set(JSON_OUTPUT "${JSON_OUTPUT}   \"INCLUDE_DIRECTORIES\": ${JSON_INCLUDES},\n")
+  set(JSON_OUTPUT "${JSON_OUTPUT}   \"COMPILE_DEFINITIONS\": ${JSON_DEFINITIONS},\n")
+  set(JSON_OUTPUT "${JSON_OUTPUT}   \"LINK_LIBRARIES\": ${JSON_LINK_LIBRARIES}\n")
+  set(JSON_OUTPUT "${JSON_OUTPUT}}\n")
+
+  # Write to a file
+  file(WRITE "${PROJECT_BINARY_DIR}/bin/${target_name}_properties.json" ${JSON_OUTPUT})
+  message(STATUS "Wrote ${JSON_OUTPUT} to ${PROJECT_BINARY_DIR}/bin/${target_name}_properties.json")
 
 endmacro()
-
-# info_collector(${TARGET_NAME} ${OUTPUT_FILE})
-
-# function(kecske)
-#   message(STATUS "Hello")
-# endfunction()
-
-# kecske()

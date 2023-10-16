@@ -31,6 +31,14 @@ macro(diagnostic)
     message(STATUS "${libname} target COMPILE_OPTIONS list: -> ${list}")
     get_target_property(list ${libname} C_STANDARD)
     message(STATUS "${libname} target C_STANDARD list: -> ${list}")
+    # Extract the BUILD_INTERFACE path from the INCLUDE_DIRECTORIES property
+    get_target_property(RAW_INCLUDE_DIRS ${libname} INCLUDE_DIRECTORIES)
+    string(REGEX REPLACE ".*$<BUILD_INTERFACE:([^>]*)>.*" "\\1" BUILD_INTERFACE_PATH ${RAW_INCLUDE_DIRS})
+
+    # Convert the BUILD_INTERFACE path to an absolute path
+    get_filename_component(ABSOLUTE_PATH ${RAW_INCLUDE_DIRS} ABSOLUTE)
+
+    message(STATUS "Absolute Build Interface Path: ${ABSOLUTE_PATH}")
   else()
     color_print(cyan "--> ${libname}: ")
   endif()
