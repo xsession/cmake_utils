@@ -23,7 +23,6 @@ if(NOT DEFINED CMAKE_UTILS_INCLUDED)
     include(xc16-output_generation)
     include(run_pickpack)
     include(info_collector)
-    # include(collected_info_generation)
     set(CMAKE_UTILS_PATH "${CMAKE_CURRENT_LIST_DIR}")
     set(CMAKE_UTILS_INCLUDED TRUE)
 

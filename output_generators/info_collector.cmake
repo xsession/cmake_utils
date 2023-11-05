@@ -44,3 +44,103 @@ macro(info_collector target_name)
   message(STATUS "Wrote ${JSON_OUTPUT} to ${PROJECT_BINARY_DIR}/bin/${target_name}_properties.json")
 
 endmacro()
+
+macro(write_list_to_json list_var json_filename)
+
+    include(${PROJECT_BINARY_DIR}/${PROJECT_NAME}/CMakeFiles/${PROJECT_NAME}.dir/DependInfo.cmake)
+    message(STATUS "paper_dispenser CMAKE_ASM_TARGET_INCLUDE_PATH: ${CMAKE_ASM_TARGET_INCLUDE_PATH}")
+    message(STATUS "CMAKE_ASM_FLAGS: ${CMAKE_TARGET_DEFINITIONS_ASM}")
+
+    # Start JSON file
+    set(json_content "")
+    string(APPEND json_content "{\n")
+
+    # ------------------------ PROJECT_NAME ---------------------------
+    string(APPEND json_content "\t\"project_name\": \"${PROJECT_NAME}\",\n")
+
+    # ------------------------ INCLUDE_DIRECTORIES ---------------------------
+    string(APPEND json_content "\t\"include_directories\": [\n")
+
+    # Iterate over the list and append each element to the JSON string
+    foreach(item IN LISTS ${list_var})
+            if(IS_ABSOLUTE ${item})
+                    # message("The path ${item} is an absolute path.")
+                    string(APPEND json_content "\"${item}\",")
+            else()
+                    message("The path ${item} is not an absolute path.")
+            endif()
+    endforeach()
+
+    # Remove the trailing comma
+    string(LENGTH "${json_content}" len)
+    math(EXPR len "${len}-1")
+    string(SUBSTRING "${json_content}" 0 ${len} json_content)
+
+    # Close the JSON array
+    string(APPEND json_content "]")
+
+    string(APPEND json_content ",\n")
+
+    # ------------------------ COMPILE_OPTIONS ---------------------------
+    string(APPEND json_content "\t\"compile_options\": [\n")
+
+    string(APPEND json_content "\"${CMAKE_C_FLAGS}\",")
+    string(APPEND json_content "\"${CMAKE_C_FLAGS_DEBUG}\",")
+    string(APPEND json_content "\"${COMPILE_OPTIONS}\",")
+
+    # Remove the trailing comma
+    string(LENGTH "${json_content}" len)
+    math(EXPR len "${len}-1")
+    string(SUBSTRING "${json_content}" 0 ${len} json_content)
+
+    # Close the JSON array
+    string(APPEND json_content "]")
+    string(APPEND json_content ",\n")
+
+    # ------------------------ COMPILE_DEFINES ---------------------------
+    string(APPEND json_content "\t\"compile_defines\": {\n")
+
+    # Iterate over the list, split each item, and format as JSON
+    foreach(item IN LISTS CMAKE_TARGET_DEFINITIONS_ASM)
+            # Split item into key and value
+            string(REGEX MATCH "^([^=]+)=(.+)$" _ ${item})
+            set(key "${CMAKE_MATCH_1}")
+            set(value "${CMAKE_MATCH_2}")
+
+            # Determine if value is a string or a number
+            if(value MATCHES "^-?[0-9]+$")
+                    # It's a number
+                    string(APPEND json_content "    \"${key}\": ${value},\n")
+            else()
+                    # It's a string
+                    if(value MATCHES "^\".*\"$")
+                            # The value already has quotes
+                            string(APPEND json_content "    \"${key}\": ${value},\n")
+                    else()
+                            # The value doesn't have quotes, so add them
+                            string(APPEND json_content "    \"${key}\": \"${value}\",\n")
+                    endif()
+            endif()
+    endforeach()
+
+    # Remove the trailing comma
+    string(LENGTH "${json_content}" len)
+    math(EXPR len "${len}-2")
+    string(SUBSTRING "${json_content}" 0 ${len} json_content)
+
+    # Close the JSON array
+    string(APPEND json_content "}")
+
+    string(APPEND json_content "\n}")
+
+    if(EXISTS "${PROJECT_BINARY_DIR}/${json_filename}")
+            file(REMOVE "${PROJECT_BINARY_DIR}/${json_filename}")
+            file(WRITE "${PROJECT_BINARY_DIR}/${json_filename}" "${json_content}")
+    endif()
+
+    # Write to file
+    file(STRINGS "${PROJECT_BINARY_DIR}/${json_filename}" "${json_content}")
+endmacro()
+
+# Usage:
+# write_list_to_json(CMAKE_ASM_TARGET_INCLUDE_PATH "output.json")
