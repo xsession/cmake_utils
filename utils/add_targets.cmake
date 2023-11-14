@@ -196,11 +196,19 @@ function(add_module_interface_lib)
         target_link_directories(${lib_if_NAME} INTERFACE ${lib_if_LINK_DIR})
 
         foreach(include_name IN LISTS lib_if_INCLUDE)
-            target_include_directories(${lib_if_NAME} INTERFACE
-                    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${include_name}>
-                    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_if_NAME}>
-            )
-        endforeach()
+        if(IS_ABSOLUTE ${include_name})
+            # Absolute path, use as is
+            set(includedir ${include_name})
+        else()
+            # Relative path, concatenate
+            set(includedir ${CMAKE_CURRENT_SOURCE_DIR}/${include_name})
+        endif()
+    
+        target_include_directories(${lib_if_NAME} INTERFACE
+                $<BUILD_INTERFACE:${includedir}>
+                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_if_NAME}>
+        )
+    endforeach()
         
         if(EXISTS ${lib_if_STANDARD})
             set_target_properties(${lib_if_NAME}
