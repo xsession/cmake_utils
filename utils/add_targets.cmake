@@ -162,7 +162,7 @@ endfunction()
 function(add_module_interface_lib)
     set(options)
     set(args NAME PACKAGE STANDARD)
-    set(list_args INCLUDE LINK LINK_DIR DEFINES TOOLCHAIN_OPTION)
+    set(list_args INCLUDE LINK LINK_DIR DEFINES COMPILE_OPTIONS TOOLCHAIN_OPTION)
     cmake_parse_arguments(
         PARSE_ARGV 0
         lib_if
@@ -196,19 +196,24 @@ function(add_module_interface_lib)
         target_link_directories(${lib_if_NAME} INTERFACE ${lib_if_LINK_DIR})
 
         foreach(include_name IN LISTS lib_if_INCLUDE)
-        if(IS_ABSOLUTE ${include_name})
-            # Absolute path, use as is
-            set(includedir ${include_name})
-        else()
-            # Relative path, concatenate
-            set(includedir ${CMAKE_CURRENT_SOURCE_DIR}/${include_name})
-        endif()
-    
-        target_include_directories(${lib_if_NAME} INTERFACE
-                $<BUILD_INTERFACE:${includedir}>
-                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_if_NAME}>
-        )
-    endforeach()
+            if(IS_ABSOLUTE ${include_name})
+                # Absolute path, use as is
+                set(includedir ${include_name})
+            else()
+                # Relative path, concatenate
+                set(includedir ${CMAKE_CURRENT_SOURCE_DIR}/${include_name})
+            endif()
+        
+            target_include_directories(${lib_if_NAME} INTERFACE
+                    $<BUILD_INTERFACE:${includedir}>
+                    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${lib_if_NAME}>
+            )
+        endforeach()
+
+        foreach(compile_option IN LISTS lib_if_COMPILE_OPTIONS)
+            target_compile_options(${lib_if_NAME} INTERFACE ${compile_option})
+        endforeach()
+        
         
         if(EXISTS ${lib_if_STANDARD})
             set_target_properties(${lib_if_NAME}
