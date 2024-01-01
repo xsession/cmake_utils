@@ -84,7 +84,7 @@ endfunction()
 function(add_module_executable)
 set(options)
     set(args NAME SUFFIX STANDARD)
-    set(list_args SOURCE INCLUDE LINK LINK_OPTION DEFINES TOOLCHAIN_OPTION)
+    set(list_args SOURCE INCLUDE LINK LINK_OPTION COMPILE_OPTION DEFINES TOOLCHAIN_OPTION)
     cmake_parse_arguments(
         PARSE_ARGV 0
         exec
@@ -116,6 +116,10 @@ set(options)
         target_compile_definitions(${exec_NAME} PRIVATE 
         ${exec_DEFINES}
         )
+
+        target_compile_options(${exec_NAME} PRIVATE 
+        ${exec_COMPILE_OPTION}
+    )
 
         target_link_options(${exec_NAME} PRIVATE
         ${exec_LINK_OPTION}
